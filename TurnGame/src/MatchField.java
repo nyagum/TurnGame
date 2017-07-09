@@ -2,12 +2,13 @@
 class MatchField{
 	public Unit User;
 	public Unit Enemy;
+	private State State;
 	private int turn;
 	
-	
-	public MatchField(Unit user, Unit emeny){
+	public MatchField(Unit user, Unit emeny, State State){
 		this.User=user;
 		this.Enemy=emeny;
+		this.State=State;
 		turn=0;
 	}
 	public void increaseTurn(){

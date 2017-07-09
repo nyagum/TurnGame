@@ -187,14 +187,30 @@ public class TurnGame {
 		TurnGame playingGame=new TurnGame();
 		
 		int number=playingGame.initGame();
+
+		State state=new State();
+    	
+    	DayChanger dayChanger = new DayChanger(state);
+    	WeatherChanger weatherChanger = new WeatherChanger(state);
+    	
+    	Thread daychange=new Thread(dayChanger,"DayChanger");
+		Thread weatherchange=new Thread(weatherChanger, "WeatherChanger");
+		
+		
+    	daychange.start();
+    	weatherchange.start();
 		
 		if(number==1){
-//			playingGame.matchField=new MatchField(new Warrior(), new Zombie());
-			playingGame.matchField=new MatchField(new Warrior(), new Dracura());
+			playingGame.matchField=new MatchField(new Warrior(), new Dracura(), state);
+		}else if(number==2){
+			playingGame.matchField=new MatchField(new Warrior(), new Zombie(), state);
 		}else{
 			System.out.println("다시 입력하세요.");
 		}
-		
+		weatherChanger.finish();
+		dayChanger.finish();
 		playingGame.playingGame(playingGame);
+		
+		
 	}
 }
