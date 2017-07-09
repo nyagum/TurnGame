@@ -1,0 +1,3 @@
+enum DayTime{
+	Day, Night;
+}
