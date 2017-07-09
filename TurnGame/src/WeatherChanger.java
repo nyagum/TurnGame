@@ -13,7 +13,7 @@ public class WeatherChanger implements Runnable{
 		case 0: state.setWeather(Weather.Sunny);break;
 		case 1: state.setWeather(Weather.Clowdy);break;
 		case 2: state.setWeather(Weather.Rainy);break;
-		case 3: state.setWeather(Weather.Snow); break;
+//		case 3: state.setWeather(Weather.Snow); break;
 		default : state.setWeather(Weather.Sunny);break;
 		}
 	}
