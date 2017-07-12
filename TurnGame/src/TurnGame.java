@@ -126,6 +126,7 @@ public class TurnGame {
 		System.out.println("");
 		System.out.println("[ "+name+" ]님, 당신의 직업을 선택해 주세요. 직업에 따라 HP와 공격 포인트를 얻는 수치가 조금씩 다릅니다.");
 		System.out.println("1.전사 [HP 20 , 1회 쉴때마다 공격포인트가 1증가, 스킬은 찌르기(공격포인트2감소)가 있습니다.]");
+		System.out.println("2.도둑 ");
 		System.out.println("");
 		//number=1;
 		
@@ -140,8 +141,15 @@ public class TurnGame {
     public void playingGame(TurnGame playingGame) throws IOException, NumberFormatException{
     	playingGame.matchField.CurrentState();
 		
-    	while(playingGame.matchField.isDeathAlive() && (playingGame.matchField.getTurn()<Constant.AttackMaxTurn)){
-    		
+		Random random = new Random();
+				
+		
+    	while( playingGame.matchField.isDeathAlive() && (playingGame.matchField.getTurn()<Constant.AttackMaxTurn)){
+    		int randomNum=random.nextInt(100);
+    		if(10>randomNum){
+    			System.out.println("몬스터가 게임을 포기하고 도망갑니다.");
+    			break;
+    		}
     		if(playingGame.matchField.User.AttackPoint >=2)
     			System.out.print("[ 1. 공격]");
     		System.out.println(" [ 2. 방어]  [ 3. 휴식] ");
@@ -177,7 +185,7 @@ public class TurnGame {
     	if(playingGame.matchField.Enemy.isAlive()&&playingGame.matchField.User.isAlive()){
     		System.out.println("비겼습니다.");
     	}else if(playingGame.matchField.User.isAlive()){
-    		System.out.println("User의 승리입니다.");
+    		System.out.println("Player의 승리입니다.");
     	}else if(playingGame.matchField.Enemy.isAlive()){
     		System.out.println("적의 승리입니다.");
     	}
@@ -201,16 +209,20 @@ public class TurnGame {
     	weatherchange.start();
 		
 		if(number==1){
-			playingGame.matchField=new MatchField(new Warrior(), new Dracura(), state);
+			playingGame.matchField=new MatchField(new Warrior(), new Dracura(state));
 		}else if(number==2){
-			playingGame.matchField=new MatchField(new Warrior(), new Zombie(), state);
+			playingGame.matchField=new MatchField(new Warrior(), new Zombie(state));
 		}else{
 			System.out.println("다시 입력하세요.");
 		}
-		weatherChanger.finish();
-		dayChanger.finish();
+		
+		Timer timer=new Timer();
+		Thread timekeeper=new Thread(timer, "timer");
+		timekeeper.start();
 		playingGame.playingGame(playingGame);
 		
-		
+		weatherChanger.finish();
+		dayChanger.finish();
+		timer.finish();
 	}
 }

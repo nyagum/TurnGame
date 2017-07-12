@@ -1,6 +1,9 @@
 
 class Dracura extends Monster{
 	
+	public Dracura(State state){
+		super.state=state;
+	}
 	public int Attack(){
 		return Bloodsucking();
 	}
@@ -26,7 +29,5 @@ class Dracura extends Monster{
 			AttackPoint-=2;
 			return AttackAmount;
 		}
-		
-		
 	}
 }

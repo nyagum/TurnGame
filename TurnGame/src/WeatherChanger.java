@@ -3,7 +3,7 @@ import java.util.Random;
 public class WeatherChanger implements Runnable{
 	private State state;
 	private boolean flag=true;
-	
+	private int count=0;
 	
 	public WeatherChanger(State state2) {
 		this.state=state2;
@@ -22,7 +22,7 @@ public class WeatherChanger implements Runnable{
 	}
 	@Override
 	public void run(){
-		while(flag){
+		while(flag && count<15){
 			//System.out.println("\t\t"+Thread.currentThread().getName()+" before :" +state.getWeather().toString());
     		WeatherChange();
     		try {
@@ -30,7 +30,8 @@ public class WeatherChanger implements Runnable{
     		} catch (InterruptedException e) {
     			e.printStackTrace();
     		}
-    	System.out.println("\t\t"+Thread.currentThread().getName()+" after :"+state.getWeather().toString());
+    		count++;
+    	System.out.println("\t"+Thread.currentThread().getName()+" after :"+state.getWeather().toString());
 		}
 	}
 	public void finish() {

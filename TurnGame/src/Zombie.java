@@ -1,5 +1,8 @@
 
 class Zombie extends Monster{
+	public Zombie(State state){
+		super.state=state;
+	}
 	public int Attack(){
 		return Swing();
 	}
